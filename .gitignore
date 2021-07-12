@@ -1,0 +1,12 @@
+.DS_Store
+dist
+
+# Logs
+
+# Node Modules
+node_modules/
+
+# Environment variables
+.env
+
+
