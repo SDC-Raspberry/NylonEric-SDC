@@ -1,0 +1,22 @@
+{
+  "name": "NylonEric-SDC",
+  "version": "1.0.0",
+  "description": "system design capstone project",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SDC-Raspberry/NylonEric-SDC.git"
+  },
+  "author": "NylonEric",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SDC-Raspberry/NylonEric-SDC/issues"
+  },
+  "homepage": "https://github.com/SDC-Raspberry/NylonEric-SDC#readme",
+  "devDependencies": {
+    "jest": "^27.0.6"
+  }
+}
