@@ -1,22 +1,20 @@
--- CREATE DATABASE IF NOT EXISTS products;
-
 CREATE TABLE IF NOT EXISTS products (
-  id INTEGER UNIQUE,
-  name VARCHAR(250),
-  slogan VARCHAR(250),
-  description VARCHAR(1000),
-  category VARCHAR(250),
-  default_price VARCHAR(250),
+  id INTEGER UNIQUE NOT NULL,
+  name VARCHAR(250) DEFAULT '',
+  slogan VARCHAR(250) DEFAULT '',
+  description VARCHAR(1000) DEFAULT '',
+  category VARCHAR(250) DEFAULT '',
+  default_price VARCHAR(250) DEFAULT '',
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS features (
-  id SERIAL UNIQUE,
+  id SERIAL UNIQUE NOT NULL,
   product_id INTEGER,
-  feature VARCHAR(250),
-  value VARCHAR(50),
+  feature VARCHAR(250) DEFAULT NULL,
+  value VARCHAR(50) DEFAULT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (product_id) REFERENCES products (id)
 );
