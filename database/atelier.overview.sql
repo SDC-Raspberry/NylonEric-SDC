@@ -20,20 +20,30 @@ CREATE TABLE IF NOT EXISTS features (
 );
 
 CREATE TABLE IF NOT EXISTS related_products (
-  id SERIAL UNIQUE,
-  product_id INTEGER,
+  id SERIAL UNIQUE NOT NULL,
+  current_product_id INTEGER,
+  related_product_id INTEGER DEFAULT NULL,
+  CHECK (related_product_id > 0),
   PRIMARY KEY (id),
-  FOREIGN KEY (product_id) REFERENCES products (id)
+  FOREIGN KEY (current_product_id) REFERENCES products (id),
+  FOREIGN KEY (related_product_id) REFERENCES products (id)
+);
+
+CREATE TABLE IF NOT EXISTS related_products_staging (
+  id SERIAL UNIQUE NOT NULL,
+  current_product_id INTEGER,
+  related_product_id INTEGER DEFAULT NULL,
+  PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS styles (
-  style_id INTEGER UNIQUE,
-  product_id INTEGER UNIQUE,
+  id INTEGER UNIQUE,
+  product_id INTEGER,
   name VARCHAR(250),
-  original_price VARCHAR(50),
-  sale_price VARCHAR(50),
-  default BOOLEAN,
-  PRIMARY KEY (style_id),
+  sale_price VARCHAR(50) DEFAULT NULL,
+  original_price VARCHAR(50) DEFAULT NULL,
+  default_style BOOLEAN,
+  PRIMARY KEY (id),
   FOREIGN KEY (product_id) REFERENCES products (id)
 );
 
