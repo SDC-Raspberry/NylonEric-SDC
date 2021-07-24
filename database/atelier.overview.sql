@@ -47,24 +47,29 @@ CREATE TABLE IF NOT EXISTS styles (
   FOREIGN KEY (product_id) REFERENCES products (id)
 );
 
+CREATE TABLE IF NOT EXISTS photos_staging (
+  id SERIAL UNIQUE,
+  thumbnail_url VARCHAR DEFAULT '',
+  url VARCHAR DEFAULT '',
+  style_id INTEGER,
+  PRIMARY KEY (id),
+  FOREIGN KEY (style_id) REFERENCES styles (id)
+);
+
 CREATE TABLE IF NOT EXISTS photos (
   id SERIAL UNIQUE,
-  product_id INTEGER UNIQUE,
-  thumbnail_url VARCHAR(250),
-  url VARCHAR(250),
-  style_id INTEGER UNIQUE,
+  thumbnail_url VARCHAR DEFAULT '',
+  url VARCHAR DEFAULT '',
+  style_id INTEGER,
   PRIMARY KEY (id),
-  FOREIGN KEY (style_id) REFERENCES styles(style_id),
-  FOREIGN KEY (product_id) REFERENCES products (id)
+  FOREIGN KEY (style_id) REFERENCES styles (id)
 );
 
 CREATE TABLE IF NOT EXISTS skus (
   id SERIAL UNIQUE,
-  product_id INTEGER UNIQUE,
-  quantity INTEGER,
+  style_id INTEGER,
   size VARCHAR(8),
-  style_id INTEGER UNIQUE,
+  quantity INTEGER,
   PRIMARY KEY (id),
-  FOREIGN KEY (style_id) REFERENCES styles(style_id),
-  FOREIGN KEY (product_id) REFERENCES products (id)
+  FOREIGN KEY (style_id) REFERENCES styles(id)
 );
