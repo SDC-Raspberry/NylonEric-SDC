@@ -58,8 +58,8 @@ CREATE TABLE IF NOT EXISTS photos_staging (
 
 CREATE TABLE IF NOT EXISTS photos (
   id SERIAL UNIQUE,
-  thumbnail_url VARCHAR DEFAULT '',
-  url VARCHAR DEFAULT '',
+  thumbnail_url VARCHAR(2048) DEFAULT '',
+  url VARCHAR(2048) DEFAULT '',
   style_id INTEGER,
   PRIMARY KEY (id),
   FOREIGN KEY (style_id) REFERENCES styles (id)
