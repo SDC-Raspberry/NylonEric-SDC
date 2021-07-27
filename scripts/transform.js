@@ -14,6 +14,7 @@ const fixQuotationMarks = (string, pattern, replacement) => {
   const regex = pattern;
   const p = string;
   let resultingText = p.replace(regex, replacement);
+  if (resultingText !== string) console.log('text changed to: ', resultingText);
   return resultingText;
 };
 
