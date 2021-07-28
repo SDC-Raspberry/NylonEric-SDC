@@ -4,7 +4,9 @@
   "description": "system design capstone project",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest --watchAll",
+    "start": "node ./server/server.js",
+    "dev": "nodemon ./server/index.js"
   },
   "repository": {
     "type": "git",
