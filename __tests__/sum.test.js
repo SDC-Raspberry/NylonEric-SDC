@@ -1,5 +1,7 @@
 const sum = require('../scripts/sum');
 
-test('add 99 and 1', () => {
-  expect(sum(99, 1)).toBe(100);
+describe('Basic Jest test suite working:', () => {
+  test('add 99 and 1', () => {
+    expect(sum(99, 1)).toBe(100);
+  });
 });
