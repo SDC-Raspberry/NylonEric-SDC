@@ -6,8 +6,7 @@ const PORT = process.env.PORT || 3331;
 let baseURL = `http://localhost:${PORT}`;
 
 describe('Server and database function test suite:', () => {
-  /* GET /products (returns 1st page, array of 5 products)
-  GET /products/:product_id (JSON object)
+  /*
   GET /products/:product_id/styles (JSON object)
   GET /products/:product_id/related (returns array of length>0)
   */
@@ -42,14 +41,14 @@ describe('Server and database function test suite:', () => {
     });
   });
 
-   /* GET products test */
+   /* GET product test */
    test('Server responds to GET /product request', () => {
     let queryString = '/products/:product_id';
 
     return request.get(queryString)
     .query({product_id: 28212})
     .then(data => {
-      console.log('server response to GET /products request: success!');
+      console.log('server response to GET /product/:product_id request: success!');
       expect(data.status).toBe(200);
       let product = JSON.parse(data.text);
       expect(product.id).toBe(28212);
@@ -59,4 +58,21 @@ describe('Server and database function test suite:', () => {
     });
   });
 
+  /* GET product styles test:  /products/:product_id/styles */
+  test('Server responds to GET /product/:product_id/styles request', () => {
+    let queryString = '/products/:product_id/styles';
+
+    return request.get(queryString)
+    .query({product_id: 28212})
+    .then(data => {
+      console.log('server response to GET /product/:product_id/styles request: success!');
+      expect(data.status).toBe(200);
+      let styles = JSON.parse(data.text);
+      expect(styles.product_id).toBe("28212");
+      expect(styles.results.length).toBe(6);
+    })
+    .catch(err => {
+      console.error('error in GET request: ', err);
+    });
+  });
 });
