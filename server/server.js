@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const productsMock = require('./mockData').products;
 const productMock = productsMock[0];
+const stylesMock = require('./mockData').styles;
+const relatedMock = require('./mockData').related;
 const db = require("../models");
 
 const app = express();
@@ -32,6 +34,13 @@ app.get('/products/:product_id', (req, res) => {
 })
 
 // GET /products/:product_id/styles
+app.get('/products/:product_id/styles', (req, res) => {
+  let product_id = req.params.question_id;
+  res.status(200);
+  // temp mock response
+  // db query here
+  res.send(JSON.stringify(stylesMock));
+})
 
 // GET /products/:product_id/related
 
