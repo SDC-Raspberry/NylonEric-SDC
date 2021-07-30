@@ -7,7 +7,7 @@ let baseURL = `http://localhost:${PORT}`;
 
 describe('Server and database function test suite:', () => {
   /*
-  GET /products/:product_id/styles (JSON object)
+
   GET /products/:product_id/related (returns array of length>0)
   */
 
@@ -37,7 +37,7 @@ describe('Server and database function test suite:', () => {
       expect(products.length > 0).toBe(true);
     })
     .catch(err => {
-      console.error('error in GET request: ', err);
+      console.error('error in GET /products request: ', err);
     });
   });
 
@@ -54,11 +54,11 @@ describe('Server and database function test suite:', () => {
       expect(product.id).toBe(28212);
     })
     .catch(err => {
-      console.error('error in GET request: ', err);
+      console.error('error in GET /product/:product_id request: ', err);
     });
   });
 
-  /* GET product styles test:  /products/:product_id/styles */
+  /* GET product styles test */
   test('Server responds to GET /product/:product_id/styles request', () => {
     let queryString = '/products/:product_id/styles';
 
@@ -72,7 +72,24 @@ describe('Server and database function test suite:', () => {
       expect(styles.results.length).toBe(6);
     })
     .catch(err => {
-      console.error('error in GET request: ', err);
+      console.error('error in GET products/:product_id/styles request: ', err);
+    });
+  });
+
+  /* GET product related test */
+  test('Server responds to GET /product/:product_id/related request', () => {
+    let queryString = '/products/:product_id/related';
+
+    return request.get(queryString)
+    .query({product_id: 28212})
+    .then(data => {
+      console.log('server response to GET /product/:product_id/related request: success!');
+      expect(data.status).toBe(200);
+      let related = JSON.parse(data.text);
+      expect(related.length).toBe(4);
+    })
+    .catch(err => {
+      console.error('error in GET /products/:product_id/related request: ', err);
     });
   });
 });
