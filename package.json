@@ -19,7 +19,8 @@
   },
   "homepage": "https://github.com/SDC-Raspberry/NylonEric-SDC#readme",
   "devDependencies": {
-    "jest": "^27.0.6"
+    "jest": "^27.0.6",
+    "supertest": "^6.1.4"
   },
   "dependencies": {
     "cors": "^2.8.5",
