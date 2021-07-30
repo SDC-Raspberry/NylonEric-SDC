@@ -458,5 +458,6 @@ const related = [
 
 module.exports = {
   products: products,
-  styles: styles
+  styles: styles,
+  related: related
 };

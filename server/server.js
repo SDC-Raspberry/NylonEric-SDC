@@ -43,5 +43,11 @@ app.get('/products/:product_id/styles', (req, res) => {
 })
 
 // GET /products/:product_id/related
-
+app.get('/products/:product_id/related', (req, res) => {
+  let product_id = req.params.question_id;
+  res.status(200);
+  // temp mock response
+  // db query here
+  res.send(JSON.stringify(relatedMock));
+})
 module.exports = app;
