@@ -2,7 +2,7 @@ const app = require('../server/server');
 const supertest = require('supertest');
 const request = supertest(app);
 
-const PORT = process.env.PORT || 3331;
+const PORT = process.env.TEST_PORT || 3331;
 let baseURL = `http://localhost:${PORT}`;
 
 describe('Server and database function test suite:', () => {

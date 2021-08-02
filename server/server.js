@@ -22,7 +22,7 @@ app.get('/products', (req, res) => {
   // temp mock response
   // db query here
   res.send(JSON.stringify(productsMock));
-})
+});
 
 // GET /products/:product_id
 app.get('/products/:product_id', (req, res) => {
@@ -31,7 +31,7 @@ app.get('/products/:product_id', (req, res) => {
   // temp mock response
   // db query here
   res.send(JSON.stringify(productMock));
-})
+});
 
 // GET /products/:product_id/styles
 app.get('/products/:product_id/styles', (req, res) => {
@@ -40,7 +40,7 @@ app.get('/products/:product_id/styles', (req, res) => {
   // temp mock response
   // db query here
   res.send(JSON.stringify(stylesMock));
-})
+});
 
 // GET /products/:product_id/related
 app.get('/products/:product_id/related', (req, res) => {
@@ -49,5 +49,6 @@ app.get('/products/:product_id/related', (req, res) => {
   // temp mock response
   // db query here
   res.send(JSON.stringify(relatedMock));
-})
+});
+
 module.exports = app;
