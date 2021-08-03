@@ -22,25 +22,27 @@ app.get('/products', (req, res) => {
   let count = Number(req.query.count || 5);
   db.getProducts(page, count)
     .then(data => {
-      console.log('in get route', data);
       res.status(200);
       res.send(JSON.stringify(data));
     })
-    .catch(error => console.error(error));
-
-  // temp mock response
-  // db query here
-
-
+    .catch(error => {
+    console.error(error);
+    res.sendStatus(500);
+    });
 });
 
 // GET /products/:product_id
 app.get('/products/:product_id', (req, res) => {
-  let product_id = req.params.question_id;
-  res.status(200);
-  // temp mock response
-  // db query here
-  res.send(JSON.stringify(productMock));
+  let product_id = req.params.product_id;
+  db.getProduct(product_id)
+  .then(data => {
+    res.status(200);
+    res.send(JSON.stringify(data));
+  })
+  .catch(error => {
+    console.error(error);
+    res.sendStatus(500);
+  });
 });
 
 // GET /products/:product_id/styles
