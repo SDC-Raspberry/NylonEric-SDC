@@ -4,7 +4,7 @@ const productsMock = require('./mockData').products;
 const productMock = productsMock[0];
 const stylesMock = require('./mockData').styles;
 const relatedMock = require('./mockData').related;
-const db = require("../models");
+const db = require("../database/index.js");
 
 const app = express();
 
@@ -18,10 +18,20 @@ app.get('/', (req, res) => {
 
 // GET /products
 app.get('/products', (req, res) => {
-  res.status(200);
+  let page = Number(req.query.page || 1);
+  let count = Number(req.query.count || 5);
+  db.getProducts(page, count)
+    .then(data => {
+      console.log('in get route', data);
+      res.status(200);
+      res.send(JSON.stringify(data));
+    })
+    .catch(error => console.error(error));
+
   // temp mock response
   // db query here
-  res.send(JSON.stringify(productsMock));
+
+
 });
 
 // GET /products/:product_id

@@ -1,17 +1,29 @@
-require('dotenv').config();
+const db = require('./db.js');
 
-const { Pool } = require ('pg');
+const getProducts = (page, count) => {
+  let queryString = 'SELECT * FROM products ORDER BY id OFFSET $1 LIMIT $2';
+  let offset = (page - 1) * count;
+  let params = [offset, count];
+  return db.pool
+    .connect()
+    .then(client => {
+      console.log('connection success');
+      return client
+      .query(queryString, params)
+      .then(results => {
+        client.release();
+        return results.rows;
+      })
+      .catch(error => {
+        client.release();
+        console.error(error);
+      });
+    })
+    .catch(error => {
+      console.error;(error);
+    });
+};
 
-// check current environment variables to use either test db or dev/production
-let currentDatabase = '';
-process.env.NODE_ENV === 'test' ? let currentDatabase = process.env.PSQL_TEST_DATABASE : currentDatabase = process.env.PSQL_DATABASE;
-
-const pool = new Pool({
-  user: process.env.PSQL_USER,
-  host: process.env.PSQL_HOST,
-  database: currentDatabase,
-  password: process.env.PSQL_PASSWORD,
-  port: process.env.PSQL_PORT
-});
-
-module.exports = pool;
+module.exports = {
+  getProducts
+};
