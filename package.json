@@ -4,7 +4,7 @@
   "description": "system design capstone project",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll",
+    "test": "jest --watchAll --verbose",
     "test-coverage": "jest --coverage",
     "start": "node ./server/index.js",
     "dev": "nodemon ./server/index.js"

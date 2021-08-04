@@ -14,7 +14,7 @@ describe('Server and database function test suite:', () => {
   /* server connection test */
   test('Server responds to GET request', () => {
     let queryString = '/';
-
+    expect.assertions(1);
     return request.get(queryString)
     .then(data => {
       console.log('server response to GET request: ', data.text)
@@ -28,7 +28,7 @@ describe('Server and database function test suite:', () => {
   /* GET products test */
   test('Server responds to GET /products request', () => {
     let queryString = '/products';
-
+    expect.assertions(2);
     return request.get(queryString)
     .then(data => {
       console.log('server response to GET /products request: success!');
@@ -44,7 +44,7 @@ describe('Server and database function test suite:', () => {
    /* GET product test */
    test('Server responds to GET /product request', () => {
     let queryString = '/products/:product_id';
-
+    expect.assertions(2);
     return request.get(queryString)
     .query({product_id: 28212})
     .then(data => {
@@ -61,7 +61,7 @@ describe('Server and database function test suite:', () => {
   /* GET product styles test */
   test('Server responds to GET /product/:product_id/styles request', () => {
     let queryString = '/products/:product_id/styles';
-
+    expect.assertions(3);
     return request.get(queryString)
     .query({product_id: 28212})
     .then(data => {
@@ -79,17 +79,18 @@ describe('Server and database function test suite:', () => {
   /* GET product related test */
   test('Server responds to GET /product/:product_id/related request', () => {
     let queryString = '/products/:product_id/related';
-
+    expect.assertions(2);
     return request.get(queryString)
     .query({product_id: 28212})
     .then(data => {
       console.log('server response to GET /product/:product_id/related request: success!');
-      expect(data.status).toBe(200);
       let related = JSON.parse(data.text);
+      expect(data.status).toBe(200);
       expect(related.length).toBe(4);
     })
     .catch(err => {
       console.error('error in GET /products/:product_id/related request: ', err);
+      expect(err).toBe('error');
     });
   });
 });
