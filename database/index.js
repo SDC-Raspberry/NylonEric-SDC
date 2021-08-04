@@ -7,7 +7,6 @@ const getProducts = (page, count) => {
   return db.pool
     .connect()
     .then(client => {
-      console.log('connection success');
       return client
       .query(queryString, params)
       .then(results => {
@@ -35,7 +34,6 @@ const getProduct = (product_id) => {
       client.query(featuresQueryString, [product_id])
     ])
     .then(results => {
-      console.log('in the then: ', results);
       client.release();
       let info = results[0].rows[0];
       let productInfo = {
@@ -48,7 +46,6 @@ const getProduct = (product_id) => {
         features: []
       };
       let features = results[1].rows;
-      console.log('here is the product and features:', productInfo, features);
       productInfo.features = features;
       return productInfo;
     })
@@ -62,28 +59,6 @@ const getProduct = (product_id) => {
     console.error(error);
     return error;
   });
-  //   return client
-  //   .query(queryString, [product_id])
-  //   .then(results => {
-  //     // client.release();
-  //     return {
-  //       id: Number(results.product_id,
-  //       name: results.name,
-  //       slogan: results.slogan,
-  //       description: results.description,
-  //       category: results.category,
-  //       default_price: results.default_price,
-  //       features: []
-  //     };
-  //   })
-  //   .then(product => {
-  //     let product_id = product.id;
-  //     let queryString = 'SELECT * FROM features WHERE product_id=$1';
-  //     return client
-  //     .query(queryString, [product_id])
-  //     )
-  //   })
-  // })
 };
 
 module.exports = {
