@@ -4,7 +4,7 @@ const productsMock = require('./mockData').products;
 const productMock = productsMock[0];
 const stylesMock = require('./mockData').styles;
 const relatedMock = require('./mockData').related;
-const db = require("../models");
+const db = require("../database/index.js");
 
 const app = express();
 
@@ -18,37 +18,59 @@ app.get('/', (req, res) => {
 
 // GET /products
 app.get('/products', (req, res) => {
-  res.status(200);
-  // temp mock response
-  // db query here
-  res.send(JSON.stringify(productsMock));
+  let page = Number(req.query.page || 1);
+  let count = Number(req.query.count || 5);
+  db.getProducts(page, count)
+    .then(data => {
+      res.status(200);
+      res.send(JSON.stringify(data));
+    })
+    .catch(error => {
+    console.error(error);
+    res.sendStatus(500);
+    });
 });
 
 // GET /products/:product_id
 app.get('/products/:product_id', (req, res) => {
-  let product_id = req.params.question_id;
-  res.status(200);
-  // temp mock response
-  // db query here
-  res.send(JSON.stringify(productMock));
+  let product_id = req.params.product_id;
+  db.getProduct(product_id)
+  .then(data => {
+    res.status(200);
+    res.send(JSON.stringify(data));
+  })
+  .catch(error => {
+    console.error(error);
+    res.sendStatus(500);
+  });
 });
 
 // GET /products/:product_id/styles
 app.get('/products/:product_id/styles', (req, res) => {
-  let product_id = req.params.question_id;
-  res.status(200);
-  // temp mock response
-  // db query here
-  res.send(JSON.stringify(stylesMock));
+  let product_id = req.params.product_id;
+  db.getStyles(product_id)
+  .then(data => {
+    res.status(200);
+    res.send(JSON.stringify(data));
+  })
+  .catch(error => {
+    console.error(error);
+    res.sendStatus(500);
+  });
 });
 
 // GET /products/:product_id/related
 app.get('/products/:product_id/related', (req, res) => {
-  let product_id = req.params.question_id;
-  res.status(200);
-  // temp mock response
-  // db query here
-  res.send(JSON.stringify(relatedMock));
+  let product_id = req.params.product_id;
+  db.getRelated(product_id)
+  .then(data => {
+    res.status(200);
+    res.send(JSON.stringify(data));
+  })
+  .catch(error => {
+    console.error(error);
+    res.sendStatus(500);
+  })
 });
 
 module.exports = app;

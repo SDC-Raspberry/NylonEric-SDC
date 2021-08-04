@@ -4,9 +4,9 @@
   "description": "system design capstone project",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll",
+    "test": "jest --watchAll --verbose",
     "test-coverage": "jest --coverage",
-    "start": "node ./server/server.js",
+    "start": "node ./server/index.js",
     "dev": "nodemon ./server/index.js"
   },
   "repository": {
@@ -26,6 +26,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "csv-parser": "^3.0.0",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "pg": "^8.6.0",
     "pg-hstore": "^2.3.4",

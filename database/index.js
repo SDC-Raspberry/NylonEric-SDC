@@ -1,17 +1,158 @@
-require('dotenv').config();
+const db = require('./db.js');
 
-const { Pool } = require ('pg');
+const getProducts = (page, count) => {
+  let queryString = 'SELECT * FROM products ORDER BY id OFFSET $1 LIMIT $2';
+  let offset = (page - 1) * count;
+  let params = [offset, count];
+  return db.pool
+    .connect()
+    .then(client => {
+      return client
+      .query(queryString, params)
+      .then(results => {
+        client.release();
+        return results.rows;
+      })
+      .catch(error => {
+        client.release();
+        console.error(error);
+      });
+    })
+    .catch(error => {
+      console.error(error);
+    });
+};
 
-// check current environment variables to use either test db or dev/production
-let currentDatabase = '';
-process.env.NODE_ENV === 'test' ? let currentDatabase = process.env.PSQL_TEST_DATABASE : currentDatabase = process.env.PSQL_DATABASE;
+const getProduct = (product_id) => {
+  let productsQueryString = 'SELECT * FROM products WHERE id=$1';
+  let featuresQueryString = 'SELECT feature, value FROM features WHERE product_id=$1';
+  return db.pool
+  .connect()
+  .then(client => {
+    return Promise.all([
+      client.query(productsQueryString, [product_id]),
+      client.query(featuresQueryString, [product_id])
+    ])
+    .then(results => {
+      client.release();
+      let info = results[0].rows[0];
+      let productInfo = {
+        id: Number(info.id),
+        name: info.name,
+        slogan: info.slogan,
+        description: info.description,
+        category: info.category,
+        default_price: info.default_price,
+        features: []
+      };
+      let features = results[1].rows;
+      productInfo.features = features;
+      return productInfo;
+    })
+    .catch(error => {
+      client.release();
+      console.error(error);
+      return error;
+    });
+  })
+  .catch(error => {
+    console.error(error);
+    return error;
+  });
+};
 
-const pool = new Pool({
-  user: process.env.PSQL_USER,
-  host: process.env.PSQL_HOST,
-  database: currentDatabase,
-  password: process.env.PSQL_PASSWORD,
-  port: process.env.PSQL_PORT
-});
+const getStyles = (product_id) => {
+  let stylesQueryString = 'SELECT id, name, sale_price, original_price, default_style FROM styles WHERE product_id=$1';
+  let photosQueryString = 'SELECT p.style_id, thumbnail_url, url FROM photos p, styles s WHERE p.style_id = s.id AND s.product_id = $1';
+  let skusQueryString = 'SELECT k.style_id, k.id, quantity, size FROM skus k, styles s WHERE k.style_id = s.id AND s.product_id = $1';
+  return db.pool
+  .connect()
+  .then(client => {
+    return Promise.all([
+      client.query(stylesQueryString, [ product_id ]),
+      client.query(photosQueryString, [ product_id ]),
+      client.query(skusQueryString, [ product_id ])
+    ])
+    .then(results => {
+      let tempObject = {};
+      let styles = results[0].rows;
+      let photos = results[1].rows;
+      let skus = results[2].rows;
+      photos.forEach(photo => {
+        let photoStyleId = photo.style_id;
+        let photoObject = {
+          'thumbnail_url': photo.thumbnail_url,
+          'url': photo.url
+        };
+        if (tempObject[photoStyleId] !== undefined) {
+          tempObject[photoStyleId].photos.push(photoObject);
+        } else {
+          tempObject[photoStyleId] = {
+            photos: [photoObject],
+            skus: {}
+          };
+        }
+      });
+      skus.forEach(sku => {
+        let skuStyleId = sku.style_id;
+        let skuObject = {
+          quantity: sku.quantity,
+          size: sku.size
+        }
+        if (skuStyleId !== undefined) {
+          tempObject[skuStyleId].skus[sku.id] = skuObject;
+        } else {
+          tempObject[skuStyleId] = {
+            photos: [],
+            skus: { [sku.id]: skuObject }
+          };
+        }
+      });
+      styles.forEach(style => {
+        style['default?'] = style.default_style;
+        style.photos = tempObject[style.id].photos;
+        style.skus = tempObject[style.id].skus;
+        delete style.default_style;
+      });
+      return { 'product_id': product_id, 'results': styles };
+    })
+    .catch(error => {
+      console.error(error);
+      return error;
+    })
+  })
+  .catch(error => {
+    console.error(error);
+    return error;
+  });
+};
 
-module.exports = pool;
+const getRelated = (product_id) => {
+  let relatedQueryString = 'SELECT related_product_id FROM related_products WHERE current_product_id = $1';
+  return db.pool
+  .connect()
+  .then(client => {
+    return client.query(relatedQueryString, [product_id])
+    .then(results => {
+      client.release();
+      let relatedProducts = results.rows.map(result => result.related_product_id);
+      return relatedProducts;
+    })
+    .catch(error => {
+      client.release();
+      console.error(error);
+      return error;
+    });
+  })
+  .catch(error => {
+    console.error(error);
+    return error;
+  });
+};
+
+module.exports = {
+  getProducts,
+  getProduct,
+  getStyles,
+  getRelated
+};
