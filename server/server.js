@@ -1,4 +1,3 @@
-require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const productsMock = require('./mockData').products;
@@ -8,7 +7,7 @@ const relatedMock = require('./mockData').related;
 const db = require("../database/index.js");
 
 const app = express();
-let testCondition = process.env.NODE_ENV === 'test' ? true : false;
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json({ strict: false }));
 
@@ -48,7 +47,7 @@ app.get('/products/:product_id', (req, res) => {
 
 // GET /products/:product_id/styles
 app.get('/products/:product_id/styles', (req, res) => {
-  let product_id = req.params.question_id;
+  let product_id = req.params.product_id;
   db.getStyles(product_id)
   .then(data => {
     res.status(200);
@@ -62,7 +61,7 @@ app.get('/products/:product_id/styles', (req, res) => {
 
 // GET /products/:product_id/related
 app.get('/products/:product_id/related', (req, res) => {
-  let product_id = req.params.question_id;
+  let product_id = req.params.product_id;
   db.getRelated(product_id)
   .then(data => {
     res.status(200);

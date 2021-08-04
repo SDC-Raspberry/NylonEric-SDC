@@ -61,7 +61,98 @@ const getProduct = (product_id) => {
   });
 };
 
+const getStyles = (product_id) => {
+  let stylesQueryString = 'SELECT id, name, sale_price, original_price, default_style FROM styles WHERE product_id=$1';
+  let photosQueryString = 'SELECT p.style_id, thumbnail_url, url FROM photos p, styles s WHERE p.style_id = s.id AND s.product_id = $1';
+  let skusQueryString = 'SELECT k.style_id, k.id, quantity, size FROM skus k, styles s WHERE k.style_id = s.id AND s.product_id = $1';
+  return db.pool
+  .connect()
+  .then(client => {
+    return Promise.all([
+      client.query(stylesQueryString, [ product_id ]),
+      client.query(photosQueryString, [ product_id ]),
+      client.query(skusQueryString, [ product_id ])
+    ])
+    .then(results => {
+      let tempObject = {};
+      let styles = results[0].rows;
+      let photos = results[1].rows;
+      let skus = results[2].rows;
+      photos.forEach(photo => {
+        let photoStyleId = photo.style_id;
+        let photoObject = {
+          'thumbnail_url': photo.thumbnail_url,
+          'url': photo.url
+        };
+        if (tempObject[photoStyleId] !== undefined) {
+          tempObject[photoStyleId].photos.push(photoObject);
+        } else {
+          tempObject[photoStyleId] = {
+            photos: [photoObject],
+            skus: {}
+          };
+        }
+      });
+      skus.forEach(sku => {
+        let skuStyleId = sku.style_id;
+        let skuObject = {
+          quantity: sku.quantity,
+          size: sku.size
+        }
+        if (skuStyleId !== undefined) {
+          tempObject[skuStyleId].skus[sku.id] = skuObject;
+        } else {
+          tempObject[skuStyleId] = {
+            photos: [],
+            skus: { [sku.id]: skuObject }
+          };
+        }
+      });
+      styles.forEach(style => {
+        style['default?'] = style.default_style;
+        style.photos = tempObject[style.id].photos;
+        style.skus = tempObject[style.id].skus;
+        delete style.default_style;
+      });
+      return { 'product_id': product_id, 'results': styles };
+    })
+    .catch(error => {
+      console.error(error);
+      return error;
+    })
+  })
+  .catch(error => {
+    console.error(error);
+    return error;
+  });
+};
+
+const getRelated = (product_id) => {
+  let relatedQueryString = 'SELECT related_product_id FROM related_products WHERE current_product_id = $1';
+  return db.pool
+  .connect()
+  .then(client => {
+    return client.query(relatedQueryString, [product_id])
+    .then(results => {
+      client.release();
+      let relatedProducts = results.rows.map(result => result.related_product_id);
+      return relatedProducts;
+    })
+    .catch(error => {
+      client.release();
+      console.error(error);
+      return error;
+    });
+  })
+  .catch(error => {
+    console.error(error);
+    return error;
+  });
+};
+
 module.exports = {
   getProducts,
-  getProduct
+  getProduct,
+  getStyles,
+  getRelated
 };
