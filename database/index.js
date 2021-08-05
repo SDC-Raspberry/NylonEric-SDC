@@ -7,6 +7,7 @@ const getProducts = (page, count) => {
   return db.pool
     .connect()
     .then(client => {
+      console.log('pool client created in server: ', client.connectionParameters);
       return client
       .query(queryString, params)
       .then(results => {
