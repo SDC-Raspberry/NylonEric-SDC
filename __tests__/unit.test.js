@@ -1,15 +1,34 @@
 const app = require('../server/server');
 const supertest = require('supertest');
+const { initializeTestDatabase, clearTestDatabase, databaseConnect, databaseRelease } = require('../database/scripts.js');
 const request = supertest(app);
+const chalk = require('chalk');
 
 const PORT = process.env.TEST_PORT || 3331;
 let baseURL = `http://localhost:${PORT}`;
 
 describe('Server and database function test suite:', () => {
-  /*
+  beforeAll(() => {
+    return databaseConnect()
+    .then(client => {
+      console.log(chalk.bgBlue('test client connected!!!!!****** client:', client.connectionParameters));
+      return initializeTestDatabase(client);
+    })
+    .then(data => {
+      console.log(chalk.bgBlue('success on initialization of test db, data: ', data));
+    })
+    .catch(error => error);
+  });
 
-  GET /products/:product_id/related (returns array of length>0)
-  */
+  afterAll(() => {
+    console.log('after all ***');
+    return clearTestDatabase()
+    .then(() => {
+      console.log('after all test db cleared***');
+      return databaseRelease()
+    })
+    .catch(error => error);
+  });
 
   /* server connection test */
   test('Server responds to GET request', () => {

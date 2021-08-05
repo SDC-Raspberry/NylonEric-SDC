@@ -68,10 +68,22 @@ const getStyles = (product_id) => {
   return db.pool
   .connect()
   .then(client => {
+    console.time('styles1');
+    console.time('styles2');
+    console.time('styles3');
     return Promise.all([
-      client.query(stylesQueryString, [ product_id ]),
-      client.query(photosQueryString, [ product_id ]),
-      client.query(skusQueryString, [ product_id ])
+      client.query(stylesQueryString, [ product_id ]).then(result => {
+        console.timeEnd('styles1');
+        return result;
+      }),
+      client.query(photosQueryString, [ product_id ]).then(result => {
+        console.timeEnd('styles2');
+        return result;
+      }),
+      client.query(skusQueryString, [ product_id ]).then(result => {
+        console.timeEnd('styles3');
+        return result;
+      })
     ])
     .then(results => {
       let tempObject = {};

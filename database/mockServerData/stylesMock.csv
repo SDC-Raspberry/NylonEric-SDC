@@ -1,0 +1,75 @@
+id,productId,name,sale_price,original_price,default_style
+1,1,"Forest Green & Black",null,140,1
+2,1,"Desert Brown & Tan",null,140,0
+3,1,"Ocean Blue & Grey",100,140,0
+4,1,"Digital Red & Black",null,140,0
+5,1,"Sky Blue & White",100,140,0
+6,1,"Dark Grey & Black",null,170,0
+7,2,"Black Lenses & Black Frame",null,69,0
+8,2,"Black Lenses & Gold Frame",null,69,1
+9,2,"Gold Lenses & Black Frame",null,69,0
+10,2,"Gold Lenses & Gold Frame",null,69,0
+11,3,"Black",null,40,1
+12,3,"Grey",null,40,0
+13,3,"Goldenrod",35,40,0
+14,3,"Maroon",35,40,0
+15,3,"Chartreuse",25,40,0
+16,3,"White",null,40,0
+17,4,"Black",null,65,1
+18,4,"Olive Green",null,65,0
+19,4,"Grey",null,65,0
+20,4,"Tan",null,65,0
+21,4,"Red",null,65,0
+22,4,"Pinstripe",null,65,0
+23,4,"Khaki",null,65,0
+24,4,"Plaid",null,65,0
+25,4,"White",null,65,0
+26,5,"White & White",null,99,1
+27,5,"White & Red",null,99,0
+28,5,"White & Black",null,99,0
+29,5,"White & Blue",null,99,0
+30,6,"White",null,89,1
+31,6,"Black",null,89,0
+32,7,"White Sole",null,120,0
+33,7,"Black Sole",null,120,0
+34,7,"Tan Sole",null,120,0
+35,7,"Red Sole",null,120,0
+36,7,"Yellow Sole",null,120,0
+37,8,"Zebra Stripe",null,900,0
+38,8,"Oreo",null,750,0
+39,8,"Red Supply",null,450,0
+40,8,"White",null,450,1
+41,8,"Black",null,950,0
+42,8,"Pink",null,450,0
+43,8,"Green",null,450,0
+44,8,"Butter",400,450,0
+45,8,"Grey",null,450,0
+46,9,"White",null,59,0
+47,10,"Reality",null,500000000,1
+48,10,"Space",null,500000000,0
+49,10,"Time",null,500000000,0
+50,10,"Power",null,500000000,0
+51,10,"Mind",null,500000000,0
+52,10,"Soul",null,500000000,0
+53,12,"Purple",null,570,1
+54,13,"Silver",null,130,1
+55,13,"Silver",null,130,0
+56,13,"Violet",null,130,0
+57,14,"Lime",null,556,1
+58,14,"Violet",null,556,0
+59,15,"Lime",null,904,1
+60,15,"Cyan",null,904,0
+61,15,"Cyan",null,904,0
+62,16,"Fuchsia",null,888,1
+63,16,"Azure",null,888,0
+64,16,"Lavender",null,888,0
+65,16,"Sky blue",139,888,0
+66,17,"Teal",null,398,1
+67,17,"Purple",null,398,0
+68,18,"Ivory",45,119,1
+69,18,"Black",null,119,0
+70,19,"Purple",null,573,1
+71,19,"Maroon",null,573,0
+72,19,"Black",null,573,0
+73,19,"Maroon",null,573,0
+74,20,"Orange",null,950,1
