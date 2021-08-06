@@ -64,12 +64,3 @@ id,productId,name,sale_price,original_price,default_style
 63,16,"Azure",null,888,0
 64,16,"Lavender",null,888,0
 65,16,"Sky blue",139,888,0
-66,17,"Teal",null,398,1
-67,17,"Purple",null,398,0
-68,18,"Ivory",45,119,1
-69,18,"Black",null,119,0
-70,19,"Purple",null,573,1
-71,19,"Maroon",null,573,0
-72,19,"Black",null,573,0
-73,19,"Maroon",null,573,0
-74,20,"Orange",null,950,1

@@ -8,26 +8,25 @@ const PORT = process.env.TEST_PORT || 3331;
 let baseURL = `http://localhost:${PORT}`;
 
 describe('Server and database function test suite:', () => {
+  let client;
   beforeAll(() => {
     return databaseConnect()
-    .then(client => {
-      console.log(chalk.bgBlue('test client connected!!!!!****** client:', client.connectionParameters));
+    .then(_client => {
+      client = _client
+      console.log(chalk.bgBlue('test database client connected!\nport: ', client.connectionParameters.port));
       return initializeTestDatabase(client);
     })
-    .then(data => {
-      console.log(chalk.bgBlue('success on initialization of test db, data: ', data));
-    })
-    .catch(error => error);
+    .catch(error => console.log(error));
   });
 
   afterAll(() => {
-    console.log('after all ***');
-    return clearTestDatabase()
+    return clearTestDatabase(client)
     .then(() => {
       console.log('after all test db cleared***');
-      return databaseRelease()
+      return databaseRelease(client)
     })
-    .catch(error => error);
+    // return databaseRelease(client);
+     .catch(error => error);
   });
 
   /* server connection test */
@@ -36,12 +35,11 @@ describe('Server and database function test suite:', () => {
     expect.assertions(1);
     return request.get(queryString)
     .then(data => {
-      console.log('server response to GET request: ', data.text)
       expect(data.status).toBe(200);
     })
-    .catch(err => {
-      console.error('error in GET request: ', err);
-    });
+    // .catch(err => {
+    //   console.error('error in GET request: ', err);
+    // });
   });
 
   /* GET products test */
@@ -50,7 +48,7 @@ describe('Server and database function test suite:', () => {
     expect.assertions(2);
     return request.get(queryString)
     .then(data => {
-      console.log('server response to GET /products request: success!');
+      // console.log('server response to GET /products request: success!');
       expect(data.status).toBe(200);
       let products = JSON.parse(data.text);
       expect(products.length > 0).toBe(true);
@@ -65,12 +63,12 @@ describe('Server and database function test suite:', () => {
     let queryString = '/products/:product_id';
     expect.assertions(2);
     return request.get(queryString)
-    .query({product_id: 28212})
+    .query({'product_id': 11})
     .then(data => {
-      console.log('server response to GET /product/:product_id request: success!');
+      // console.log('server response to GET /products/:product_id request: success!');
       expect(data.status).toBe(200);
       let product = JSON.parse(data.text);
-      expect(product.id).toBe(28212);
+      expect(product.id).toBe(11);
     })
     .catch(err => {
       console.error('error in GET /product/:product_id request: ', err);
@@ -82,17 +80,17 @@ describe('Server and database function test suite:', () => {
     let queryString = '/products/:product_id/styles';
     expect.assertions(3);
     return request.get(queryString)
-    .query({product_id: 28212})
+    .query({'product_id':13})
     .then(data => {
-      console.log('server response to GET /product/:product_id/styles request: success!');
+      // console.log('server response to GET /product/:product_id/styles request: success!');
       expect(data.status).toBe(200);
       let styles = JSON.parse(data.text);
-      expect(styles.product_id).toBe("28212");
-      expect(styles.results.length).toBe(6);
+      expect(styles.product_id).toBe(13);
+      expect(styles.results.length).toBe(3);
     })
-    .catch(err => {
-      console.error('error in GET products/:product_id/styles request: ', err);
-    });
+    // .catch(err => {
+    //   console.error('error in GET products/:product_id/styles request: ', err);
+    // });
   });
 
   /* GET product related test */
@@ -100,16 +98,15 @@ describe('Server and database function test suite:', () => {
     let queryString = '/products/:product_id/related';
     expect.assertions(2);
     return request.get(queryString)
-    .query({product_id: 28212})
+    .query({product_id: 12})
     .then(data => {
-      console.log('server response to GET /product/:product_id/related request: success!');
+      // console.log('server response to GET /product/:product_id/related request: success!');
       let related = JSON.parse(data.text);
       expect(data.status).toBe(200);
-      expect(related.length).toBe(4);
+      expect(related.length).toBe(6);
     })
     .catch(err => {
       console.error('error in GET /products/:product_id/related request: ', err);
-      expect(err).toBe('error');
     });
   });
 });

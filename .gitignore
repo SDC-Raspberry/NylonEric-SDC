@@ -12,3 +12,5 @@ node_modules/
 # data stores
 .csv
 
+# coverge reports
+coverage/

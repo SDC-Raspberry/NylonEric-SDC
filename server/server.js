@@ -22,8 +22,7 @@ app.get('/products', (req, res) => {
   let count = Number(req.query.count || 5);
   db.getProducts(page, count)
     .then(data => {
-      res.status(200);
-      res.send(JSON.stringify(data));
+      res.status(200).send(JSON.stringify(data));
     })
     .catch(error => {
     console.error(error);
@@ -33,11 +32,10 @@ app.get('/products', (req, res) => {
 
 // GET /products/:product_id
 app.get('/products/:product_id', (req, res) => {
-  let product_id = req.params.product_id;
+  let product_id = Number(req.query.product_id);
   db.getProduct(product_id)
   .then(data => {
-    res.status(200);
-    res.send(JSON.stringify(data));
+    res.status(200).send(JSON.stringify(data));
   })
   .catch(error => {
     console.error(error);
@@ -47,9 +45,10 @@ app.get('/products/:product_id', (req, res) => {
 
 // GET /products/:product_id/styles
 app.get('/products/:product_id/styles', (req, res) => {
-  let product_id = req.params.product_id;
+  let product_id = Number(req.params.product_id);
   db.getStyles(product_id)
   .then(data => {
+    console.log('styles data: *******', data);
     res.status(200);
     res.send(JSON.stringify(data));
   })
@@ -61,11 +60,11 @@ app.get('/products/:product_id/styles', (req, res) => {
 
 // GET /products/:product_id/related
 app.get('/products/:product_id/related', (req, res) => {
-  let product_id = req.params.product_id;
+  let product_id = Number(req.query.product_id);
   db.getRelated(product_id)
   .then(data => {
-    res.status(200);
-    res.send(JSON.stringify(data));
+    console.log('data for related*** :', data);
+    res.status(200).send(JSON.stringify(data));
   })
   .catch(error => {
     console.error(error);
