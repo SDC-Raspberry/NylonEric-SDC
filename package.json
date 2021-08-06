@@ -4,8 +4,8 @@
   "description": "system design capstone project",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll --verbose",
-    "test-coverage": "jest --coverage",
+    "test": "jest --watchAll --verbose --detectOpenHandles",
+    "test-coverage": "jest --coverage --watchAll --detectOpenHandles",
     "start": "node ./server/index.js",
     "dev": "nodemon ./server/index.js"
   },

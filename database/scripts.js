@@ -7,7 +7,8 @@ const databaseConnect = () => {
   return db.pool.connect()
   .then(client => {
     return client;
-  });
+  })
+  .catch(error => error);
 };
 
 const databaseRelease = (client) => {

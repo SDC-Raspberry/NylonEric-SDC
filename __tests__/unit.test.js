@@ -24,7 +24,8 @@ describe('Server and database function test suite:', () => {
     .then(() => {
       return databaseRelease(client)
     })
-     .catch(error => console.log('error on exit process', error));
+    .catch(error => console.log('error on exit process', error));
+    //  await new Promise(resolve => setTimeout(() => resolve(), 500)); // avoid jest open handle error
   });
 
   /* server connection test */
@@ -35,9 +36,9 @@ describe('Server and database function test suite:', () => {
     .then(data => {
       expect(data.status).toBe(200);
     })
-    // .catch(err => {
-    //   console.error('error in GET request: ', err);
-    // });
+    .catch(err => {
+      console.error('error in GET request: ', err);
+    });
   });
 
   /* GET products test */
@@ -86,9 +87,9 @@ describe('Server and database function test suite:', () => {
       expect(styles.product_id).toBe(13);
       expect(styles.results.length).toBe(3);
     })
-    // .catch(err => {
-    //   console.error('error in GET products/:product_id/styles request: ', err);
-    // });
+    .catch(err => {
+      console.error('error in GET products/:product_id/styles request: ', err);
+    });
   });
 
   /* GET product related test */
