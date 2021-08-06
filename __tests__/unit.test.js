@@ -12,8 +12,8 @@ describe('Server and database function test suite:', () => {
   beforeAll(() => {
     return databaseConnect()
     .then(_client => {
-      client = _client
-      console.log(chalk.bgBlue('test database client connected!\nport: ', client.connectionParameters.port));
+      client = _client;
+      // console.log(chalk.bgBlue('test database client connected!\nport: ', client.connectionParameters.port));
       return initializeTestDatabase(client);
     })
     .catch(error => console.log(error));
@@ -22,11 +22,9 @@ describe('Server and database function test suite:', () => {
   afterAll(() => {
     return clearTestDatabase(client)
     .then(() => {
-      console.log('after all test db cleared***');
       return databaseRelease(client)
     })
-    // return databaseRelease(client);
-     .catch(error => error);
+     .catch(error => console.log('error on exit process', error));
   });
 
   /* server connection test */
