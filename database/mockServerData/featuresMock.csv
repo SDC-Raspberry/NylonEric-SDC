@@ -1,0 +1,48 @@
+id,product_id,feature,value
+1,1,"Fabric","Canvas"
+2,1,"Buttons","Brass"
+3,2,"Lenses","Ultrasheen"
+4,2,"UV Protection",null
+5,2,"Frames","LightCompose"
+6,3,"Fabric","100% Cotton"
+7,3,"Cut","Skinny"
+8,4,"Fabric","99% Cotton 1% Elastic"
+9,4,"Cut","Loose"
+10,5,"Sole","Rubber"
+11,5,"Material","FullControlSkin"
+12,5,"Mid-Sole","ControlSupport Arch Bridge"
+13,5,"Stitching","Double Stitch"
+14,6,"Sole","Rubber"
+15,6,"Material","FullControlSkin"
+16,6,"Mid-Sole","ControlSupport Arch Bridge"
+17,6,"Stitching","Double Stitch"
+18,7,"Sole","Rubber"
+19,7,"Material","FullControlSkin"
+20,7,"Stitching","Double Stitch"
+21,8,"Sole","Rubber"
+22,8,"Material","FullControlSkin"
+23,8,"Stitching","Double Stitch"
+24,9,"Sole","Rubber"
+25,9,"Material","FullControlSkin"
+26,9,"Mid-Sole","ControlSupport Arch Bridge"
+27,9,"Stitching","Double Stitch"
+28,11,"Sole","Rubber"
+29,11,"Material","FullControlSkin"
+30,11,"Stitching","Double Stitch"
+31,12,"Frame","AllLight Composition Resin"
+32,13,"Cut","Loose"
+33,13,"Lens","Ultrasheen Basic"
+34,13,"Green Leaf Certified",null
+35,14,"Fabric","Cashmere"
+36,15,"Buttons","White Resin"
+37,16,"Stitching","Cross Stitch"
+38,17,"Lifetime Guarantee",null
+39,17,"Non-GMO",null
+40,17,"Fabric","95% Cotton, 5% Elastic"
+41,17,"Lifetime Guarantee",null
+42,18,"Lens","100% UV Protective"
+43,18,"Fair Trade Certified",null
+44,19,"Stitching","Cross Stitch"
+45,19,"5 Year Warranty",null
+46,20,"Lifetime Guarantee",null
+47,20,"5 Year Warranty",null
