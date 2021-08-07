@@ -76,10 +76,10 @@ describe('Server and database function test suite:', () => {
 
   /* GET product styles test */
   test('Server responds to GET /product/:product_id/styles request', () => {
-    let queryString = '/products/:product_id/styles';
+    let product_id = 13;
+    let queryString = `/products/${product_id}/styles`;
     expect.assertions(3);
     return request.get(queryString)
-    .query({'product_id':13})
     .then(data => {
       // console.log('server response to GET /product/:product_id/styles request: success!');
       expect(data.status).toBe(200);
@@ -94,10 +94,10 @@ describe('Server and database function test suite:', () => {
 
   /* GET product related test */
   test('Server responds to GET /product/:product_id/related request', () => {
-    let queryString = '/products/:product_id/related';
+    let product_id = 12;
+    let queryString = `/products/${product_id}/related`;
     expect.assertions(2);
     return request.get(queryString)
-    .query({product_id: 12})
     .then(data => {
       // console.log('server response to GET /product/:product_id/related request: success!');
       let related = JSON.parse(data.text);
