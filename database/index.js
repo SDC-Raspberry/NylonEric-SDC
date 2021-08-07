@@ -25,7 +25,6 @@ const getProducts = (page, count) => {
 };
 
 const getProduct = (product_id) => {
-  product_id = Number(product_id);
   let productsQueryString = 'SELECT * FROM products WHERE id=$1';
   let featuresQueryString = 'SELECT feature, value FROM features WHERE product_id=$1';
   return db.pool
@@ -64,7 +63,6 @@ const getProduct = (product_id) => {
 };
 
 const getStyles = (product_id) => {
-  product_id = 13;
   let stylesQueryString = 'SELECT id, name, sale_price, original_price, default_style FROM styles WHERE product_id=$1';
   // let photosQueryString = 'SELECT p.style_id, p.thumbnail_url, p.url FROM photos p INNER JOIN styles s ON p.style_id = s.id WHERE s.product_id = $1'; *working
   let photosQueryString = 'SELECT p.style_id, p.thumbnail_url, p.url FROM photos p JOIN (SELECT * FROM styles where product_id = $1) s ON s.id = p.style_id' // *using sub-query
@@ -149,11 +147,11 @@ const getStyles = (product_id) => {
 };
 
 const getRelated = (product_id) => {
-  let relatedQueryString = 'SELECT related_product_id FROM related_products WHERE current_product_id = $1';
+  let relatedQueryString = 'SELECT related_product_id FROM related_products WHERE current_product_id=$1';
   return db.pool
   .connect()
   .then(client => {
-    return client.query(relatedQueryString, [product_id])
+    return client.query(relatedQueryString, [ product_id ])
     .then(results => {
       client.release();
       let relatedProducts = results.rows.map(result => result.related_product_id);

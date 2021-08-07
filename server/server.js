@@ -32,7 +32,7 @@ app.get('/products', (req, res) => {
 
 // GET /products/:product_id
 app.get('/products/:product_id', (req, res) => {
-  let product_id = Number(req.query.product_id);
+  let product_id = Number(req.params.product_id);
   db.getProduct(product_id)
   .then(data => {
     res.status(200).send(JSON.stringify(data));
@@ -58,7 +58,7 @@ app.get('/products/:product_id/styles', (req, res) => {
 
 // GET /products/:product_id/related
 app.get('/products/:product_id/related', (req, res) => {
-  let product_id = Number(req.query.product_id);
+  let product_id = Number(req.params.product_id);
   db.getRelated(product_id)
   .then(data => {
     res.status(200).send(JSON.stringify(data));

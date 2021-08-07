@@ -59,10 +59,10 @@ describe('Server and database function test suite:', () => {
 
    /* GET product test */
    test('Server responds to GET /product request', () => {
-    let queryString = '/products/:product_id';
+    let product_id = 11;
+    let queryString = `/products/${product_id}`;
     expect.assertions(2);
     return request.get(queryString)
-    .query({'product_id': 11})
     .then(data => {
       // console.log('server response to GET /products/:product_id request: success!');
       expect(data.status).toBe(200);
