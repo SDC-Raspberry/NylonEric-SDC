@@ -74,20 +74,20 @@ const getStyles = (product_id) => {
     console.time('styles2');
     console.time('styles3');
     return Promise.all([
-      client.query(stylesQueryString, [product_id]) //.then(result => {
-        //console.timeEnd('styles1');
-        //return result;
-      //})
+      client.query(stylesQueryString, [product_id]).then(result => {
+        console.timeEnd('styles1');
+        return result;
+      })
       ,
-      client.query(photosQueryString, [product_id]) //.then(result => {
-        //console.timeEnd('styles2');
-        //return result;
-      //})
+      client.query(photosQueryString, [product_id]).then(result => {
+        console.timeEnd('styles2');
+        return result;
+      })
       ,
-      client.query(skusQueryString, [product_id]) //.then(result => {
-        //console.timeEnd('styles3');
-        //return result;
-      //})
+      client.query(skusQueryString, [product_id]).then(result => {
+        console.timeEnd('styles3');
+        return result;
+      })
     ])
     .then(results => {
       let tempObject = {};
