@@ -30,17 +30,17 @@ export default function () {
   // http.get(`http://127.0.0.1:4321/`);
 
   // products request:
-  // let res = http.get(`http://127.0.0.1:4321/products`);
+  // res = http.get(`http://127.0.0.1:4321/products`);
 
   // product request:
   // let currentProduct = __ITER + 1000;
-  // let res = http.get(`http://127.0.0.1:4321/products/${__ITER + 900001}`);
+  let res = http.get(`http://127.0.0.1:4321/products/${__ITER + 900001}`);
 
   // styles request:
-  res = http.get(`http://127.0.0.1:4321/products/${__ITER + 900001}/styles`);
+  // res = http.get(`http://127.0.0.1:4321/products/${__ITER + 900001}/styles`);
 
   // related request:
-  // let res = http.get(`http://127.0.0.1:4321/products/${__ITER + 900001}/related`);
+  // res = http.get(`http://127.0.0.1:4321/products/${__ITER + 900001}/related`);
 
   if (
     !check(res, {'status code MUST be 200': (res) => res.status == 200,
