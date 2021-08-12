@@ -11,7 +11,7 @@ process.env.NODE_ENV === 'test' ? currentPoolObject = {
   max: 3,
   maxUses: Infinity,
   idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 2000
+  // connectionTimeoutMillis: 2000
 } : currentPoolObject = {
   user: process.env.PSQL_USER,
   host: process.env.PSQL_HOST,
@@ -21,7 +21,7 @@ process.env.NODE_ENV === 'test' ? currentPoolObject = {
   max: 3,
   maxUses: Infinity,
   idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 2000
+  // connectionTimeoutMillis: 2000
 };
 
 const pool = new Pool(currentPoolObject);
