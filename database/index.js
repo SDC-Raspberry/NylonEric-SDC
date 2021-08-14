@@ -80,14 +80,14 @@ const getStyles = (product_id) => {
       // })
       ,
       client.query(photosQueryString, [product_id]) //.then(result => {
-        //console.timeEnd('styles2');
-       //return result;
-      //})
+      //   console.timeEnd('styles2');
+      //  return result;
+      // })
       ,
-      client.query(skusQueryString, [product_id]) // .then(result => {
-        //console.timeEnd('styles3');
-        //return result;
-      //})
+      client.query(skusQueryString, [product_id]) //.then(result => {
+      //   console.timeEnd('styles3');
+      //   return result;
+      // })
     ])
     .then(results => {
       client.release();
