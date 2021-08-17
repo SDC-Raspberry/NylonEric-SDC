@@ -1,0 +1,17 @@
+# filetypes
+.git
+.gitignore
+.csv
+
+# folders
+coverage/
+node_modules/
+models/
+mockServerData/
+sdc_docker_server/
+
+# individual files
+mockData.js
+mongodb.js
+db.config.js
+.env
