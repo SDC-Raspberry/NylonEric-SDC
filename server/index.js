@@ -1,6 +1,6 @@
 const cors = require('cors');
 const app = require('./server');
-const PORT = process.env.PORT || 4321;
+const PORT = process.env.PORT || 3000;
 
 const corsOptions = {
   origin: `http://localhost:${PORT}`
