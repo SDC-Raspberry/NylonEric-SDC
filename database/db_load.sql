@@ -1,7 +1,7 @@
 -- one-time use script for loading process
 
--- products table
-COPY products(name, slogan, description, category, default_price)
+-- products table *needs id if copying all columns from .csv
+COPY products(id, name, slogan, description, category, default_price)
 FROM '../SDC/sdc_pplication_data/product.csv'
 DELIMITER ','
 CSV HEADER;
