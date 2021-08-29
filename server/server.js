@@ -8,7 +8,7 @@ const relatedMock = require('./mockData').related;
 const db = require("../database/index.js");
 
 const app = express();
-const client = redis.createClient(6379);
+const client = redis.createClient(6379, '172.17.0.2');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json({ strict: false }));
