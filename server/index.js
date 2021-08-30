@@ -1,3 +1,4 @@
+// server build version 2.0 - nginx deployment
 const cors = require('cors');
 const app = require('./server');
 const PORT = process.env.PORT || 3000;

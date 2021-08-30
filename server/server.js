@@ -6,9 +6,10 @@ const productMock = productsMock[0];
 const stylesMock = require('./mockData').styles;
 const relatedMock = require('./mockData').related;
 const db = require("../database/index.js");
+const REDIS_IP = process.env.REDIS_IP || 'localhost';
 
 const app = express();
-const client = redis.createClient(6379, '172.17.0.2');
+const client = redis.createClient(6379, REDIS_IP);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json({ strict: false }));
@@ -30,7 +31,7 @@ app.get('/products', (req, res) => {
   const productsRedisKey = `/products?page=${page}&count=${count}`;
   return client.get(productsRedisKey, (err, products) => {
     if (products) {
-      console.log('products query result exists in cache');
+      // console.log('products query result exists in cache');
       // return res.json({
       //   source: 'cache',
       //   data: JSON.parse(products)
@@ -60,7 +61,7 @@ app.get('/products/:product_id', (req, res) => {
 
   return client.get(productRedisKey, (err, product) => {
     if (product) {
-      console.log('product description query result exists in cache');
+      // console.log('product description query result exists in cache');
       return res.status(200).send(product);
     } else {
       db.getProduct(product_id)
@@ -87,7 +88,7 @@ app.get('/products/:product_id/styles', (req, res) => {
 
   return client.get(stylesRedisKey, (err, styles) => {
     if (styles) {
-      console.log('product styles query result exists in cache');
+      // console.log('product styles query result exists in cache');
       return res.status(200).send(styles);
     } else {
       db.getStyles(product_id)
@@ -114,7 +115,7 @@ app.get('/products/:product_id/related', (req, res) => {
 
   return client.get(relatedRedisKey, (err, related) => {
     if (related) {
-      console.log('related products query result exists in cache');
+      // console.log('related products query result exists in cache');
       return res.status(200).send(related);
     } else {
       db.getRelated(product_id)
